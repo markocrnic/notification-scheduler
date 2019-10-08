@@ -1,0 +1,9 @@
+Notification-scheduler API for interacting with user2flower table inside planthealthcare DB.
+Looking for users to which notification should be sent.
+
+
+Building docker image:
+docker build -t [tag-name] https://github.com/markocrnic/notification-scheduler.git
+
+Running docker image:
+docker run -d -p 5004:5000 [notification-scheduler-tag-name]

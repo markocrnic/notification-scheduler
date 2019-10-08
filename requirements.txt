@@ -1,0 +1,4 @@
+flask
+schema
+psycopg2==2.7.6
+flask_cors
