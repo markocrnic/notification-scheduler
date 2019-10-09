@@ -14,6 +14,8 @@ email_send_request = 'http://10.0.200.68:5005/sendEmail'
 def getUsersWithFlowers():
     try:
 
+        print('Starting creation of user list to send mails.')
+
         request = requests.get(user2flower_get_request)
         data = request.json()
         status = request.status_code
@@ -38,6 +40,8 @@ def getUsersWithFlowers():
         to_contact = checkToWater(to_contact)
 
         sendMail(to_contact)
+
+        printUsersToWhomSent(to_contact)
 
         return 'Emails sent successfully.'
 
@@ -129,5 +133,9 @@ def sendMail(to_contact):
         email = jsonify(email_to_send)
         request = requests.post(email_send_request, headers=headers, data=json.dumps(email_to_send))
 
+def printUsersToWhomSent(to_contact):
+
+    for contact in to_contact:
+        print('Mail sent to ' + contact['first_name'] + ' ' + contact['last_name'])
 
 
