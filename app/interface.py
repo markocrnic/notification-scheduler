@@ -21,7 +21,8 @@ def job():
 
 sched = schedule
 # sched.every(10).seconds.do(job)
-sched.every().day.at("11:00").do(job)
+# On docker container time is 2 hours late.
+sched.every().day.at("09.16").do(job)
 
 
 def schedule(sched):
