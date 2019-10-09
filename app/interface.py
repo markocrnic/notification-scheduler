@@ -14,9 +14,14 @@ def test_thread():
     return implementation.getUsersWithFlowers()
 
 
+def job():
+    with app.app_context():
+        implementation.getUsersWithFlowers()
+
+
 sched = schedule
-#sched.every(10).seconds.do(job)
-sched.every().day.at("10:30").do(implementation.getUsersWithFlowers)
+# sched.every(10).seconds.do(job)
+sched.every().day.at("10:30").do(job)
 
 
 def schedule(sched):
