@@ -5,9 +5,14 @@ import requests
 from datetime import date, datetime
 import time
 
-user2flower_get_request = 'http://10.0.200.68:5003/api/users2flowers/'
+'''user2flower_get_request = 'http://10.0.200.68:5003/api/users2flowers/'
 flower_get_request = 'http://10.0.200.68:5003/api/flowers/'
 user_get_request = 'http://10.0.200.68:5003/api/users/'
+email_send_request = 'http://10.0.200.68:5005/sendEmail'''
+
+user2flower_get_request = 'http://10.0.200.68:5002/users2flowers/'
+flower_get_request = 'http://10.0.200.68:5001/flowers/'
+user_get_request = 'http://10.0.200.68:5000/users/'
 email_send_request = 'http://10.0.200.68:5005/sendEmail'
 
 
