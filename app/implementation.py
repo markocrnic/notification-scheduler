@@ -1,19 +1,48 @@
 import json
-
+import ftputil
+from ast import literal_eval
 from flask import jsonify
 import requests
 from datetime import date, datetime
 import time
 
-'''user2flower_get_request = 'http://10.0.200.68:5003/api/users2flowers/'
-flower_get_request = 'http://10.0.200.68:5003/api/flowers/'
-user_get_request = 'http://10.0.200.68:5003/api/users/'
-email_send_request = 'http://10.0.200.68:5005/sendEmail'''
 
-user2flower_get_request = 'http://10.0.200.68:5002/users2flowers/'
-flower_get_request = 'http://10.0.200.68:5001/flowers/'
-user_get_request = 'http://10.0.200.68:5000/users/'
-email_send_request = 'http://10.0.200.68:5005/sendEmail'
+def readpathsfromftp():
+    try:
+        a_host = ftputil.FTPHost('10.0.200.68', 'empiry', '3mp1ry')
+
+        for (dirname, subdirs, files) in a_host.walk("/projects/planthealthcare/api-gateway/"):
+            for f in files:
+                if f == 'paths.txt':
+                    a_host.download(dirname + f, f)
+                    with open(f) as txtfile:
+                        content = txtfile.read()
+                        print(str(content))
+        a_host.close()
+
+        return literal_eval(content)
+
+    except Exception as e:
+        print(e)
+        a_host.close()
+
+
+def getpath(path):
+    path_dict = readpathsfromftp()
+    apiname = path.split('/')[0]
+    if apiname in path_dict:
+        apipath = path_dict[apiname] + path
+        print(apipath)
+        return apipath
+    else:
+        print('Path not found: ' + path)
+        return '404'
+
+
+user2flower_get_request = getpath('users2flowers/')
+flower_get_request = getpath('flowers/')
+user_get_request = getpath('users/')
+email_send_request = getpath('sendEmail/')
 
 
 def getUsersWithFlowers():
@@ -138,9 +167,8 @@ def sendMail(to_contact):
         email = jsonify(email_to_send)
         request = requests.post(email_send_request, headers=headers, data=json.dumps(email_to_send))
 
+
 def printUsersToWhomSent(to_contact):
 
     for contact in to_contact:
         print('Mail sent to ' + contact['first_name'] + ' ' + contact['last_name'])
-
-
