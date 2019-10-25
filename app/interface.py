@@ -9,7 +9,7 @@ app = Flask(__name__)
 CORS(app)
 
 
-@app.route('/')
+@app.route('/notificationscheduler/')
 def test_thread():
     return implementation.getUsersWithFlowers()
 
