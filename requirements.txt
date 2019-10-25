@@ -4,3 +4,4 @@ schedule
 requests
 pytest
 ftputil
+PyYAML

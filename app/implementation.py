@@ -2,7 +2,7 @@ import json
 from flask import jsonify
 import requests
 from datetime import date, datetime
-from api_management import getpath
+from api_management.api_management import getpath
 
 
 user2flower_get_request = getpath('users2flowers/')
