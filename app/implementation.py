@@ -42,7 +42,7 @@ def getUsersWithFlowers():
 
         printUsersToWhomSent(to_contact)
 
-        return 'Emails sent successfully.'
+        return {'msg': 'Emails sent successfully'}
 
     except Exception as e:
         print(e)
