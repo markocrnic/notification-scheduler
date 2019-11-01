@@ -15,7 +15,6 @@ def getUsersWithFlowers():
     try:
 
         print('Starting creation of user list to send mails.')
-
         request = requests.get(user2flower_get_request)
         data = request.json()
         status = request.status_code
@@ -109,16 +108,15 @@ def joinWithUser(to_contact, users):
 
 def checkToWater(to_contact):
     list_to_contact = []
-    date_format = "%Y-%m-%d"
+    # date_format = "%Y-%m-%d"
     current_date = date.today()
     for contact in to_contact:
-        date_of_inception = datetime.strptime(contact['date_of_inception'], date_format)
-        date_of_inception = date_of_inception.date()
-        delta = current_date - date_of_inception
+        year, month, day = parseDate(contact['date_of_inception'])
+        date_of_inception = datetime(int(year), int(month), int(day))
+        delta = current_date - date_of_inception.date()
 
         if delta.days % int(contact['watering_period']) == 0:
             list_to_contact.append(contact)
-
     return list_to_contact
 
 
@@ -138,3 +136,11 @@ def printUsersToWhomSent(to_contact):
 
     for contact in to_contact:
         print('Mail sent to ' + contact['first_name'] + ' ' + contact['last_name'])
+
+
+def parseDate(datetoparse):
+    year = datetoparse.split('-')[0]
+    month = datetoparse.split('-')[1]
+    day = datetoparse.split('-')[2]
+
+    return year, month, day
