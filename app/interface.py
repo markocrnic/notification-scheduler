@@ -1,17 +1,26 @@
 import schedule
 import time
 import threading
-from flask import Flask
+from flask import Flask, request
 from flask_cors import CORS
+from api_management.jaeger import initializejaeger
+from flask_opentracing import FlaskTracing
 import implementation as implementation
 
 app = Flask(__name__)
 CORS(app)
 
+jaeger_tracer = initializejaeger()
+tracing = FlaskTracing(jaeger_tracer)
+
 
 @app.route('/notificationscheduler/')
+@tracing.trace()
 def test_thread():
-    return implementation.getUsersWithFlowers()
+    with jaeger_tracer.start_active_span(
+            'Notification-scheduler-API endpoint /notificationscheduler/') as scope:
+        scope.span.log_kv({'event': 'Calling endpoint /notificationscheduler/', 'request_method': request.method})
+        return implementation.getUsersWithFlowers()
 
 
 def job():
