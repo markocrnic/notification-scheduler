@@ -12,6 +12,6 @@ COPY --from=gradjevinar /install /usr/local
 COPY . /app
 RUN apk --no-cache add libpq
 WORKDIR /app
-RUN chmod 777 app/
+RUN chmod -R 777 /app
 EXPOSE 5000
 CMD ["python", "app/interface.py"]
