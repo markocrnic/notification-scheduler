@@ -15,7 +15,7 @@ def readpathsfromftp():
             for f in files:
                 if f == 'paths.txt':
                     a_host.download(dirname + f, f)
-                    os.chmod('paths.txt', 0o777)
+                    os.chmod('/app/paths.txt', 0o777)
                     with open(f) as txtfile:
                         content = txtfile.read()
                         print(str(content))
